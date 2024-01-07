@@ -19,9 +19,9 @@ export default function HomeVendor({navigation}) {
       </TouchableOpacity>
       </View>
       <View style={styles.buttonWithIcon}>
-      <TouchableOpacity style={styles.buttonContainer} onPress={()=> navigation.navigate("vendor")}>
+      {/* <TouchableOpacity style={styles.buttonContainer} onPress={()=> navigation.navigate("vendor")}>
           <Text style={styles.buttonText}>View Article</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       </View>
             </View>
     </ImageBackground>

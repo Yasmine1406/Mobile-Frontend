@@ -82,11 +82,12 @@ export default function ProductScreen({ navigation, route }) {
   // dynamique 
 
   
-  console.log(data);
+  // console.log(data);
   const renderItem = ({ item }) => {
     return (
       <View style={styles.card}>
-        <Text style={styles.cardText} onPress={() => navigation.navigate("view")}>{item.nomProduit}</Text>
+        <Image source={require("../assets/sandwich.jpg")} style={{resizeMode: "cover", height: 150 }}/>
+        <Text style={styles.cardText} onPress={() => navigation.navigate("view", { item })}>{item.nomProduit}</Text>
         <Text style={styles.cardText}>{item.prix}</Text>
       </View>
     );
@@ -125,7 +126,7 @@ export default function ProductScreen({ navigation, route }) {
               data={data}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
-              numColumns={2} // Display two cards per row
+              // numColumns={1} // Display two cards per row
               contentContainerStyle={styles.flatListContent}
             />
           </View>
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   topSection: {
-    height: '8%',
+    height: 80,
     width: '100%',
     backgroundColor: 'white',
     flexDirection: 'row',

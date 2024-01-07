@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity ,Image,ImageBackground} from 'react-native';
 import { loginVendeur, loginVendor } from '../endpoint';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function VendorScreen({navigation}) {
 
@@ -20,7 +21,9 @@ export default function VendorScreen({navigation}) {
     const handleLogin = async () => {
          try {
         const response = await loginVendeur({ email: email, password: password });
-        console.log(response); 
+        // console.log(response.data.vendeurId)
+        AsyncStorage.setItem("vendeurId", response.data.vendeurId);
+        // console.log(response); 
 
         navigation.navigate("home");
     } catch (error) {

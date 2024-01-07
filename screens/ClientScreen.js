@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { loginClient, loginUser } from '../endpoint';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function ClientScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +19,9 @@ export default function ClientScreen({ navigation }) {
     const handleLogin = async () => {
          try {
         const response = await loginClient({ email: email, password: password });
-        console.log(response); 
+        AsyncStorage.setItem("clientId", response.data.clientId);
+        // console.log("clientId", response.data.clientId);
+        // console.log("ITSA MEEEE", response.data);
         navigation.navigate("Menu");
     } catch (error) {
         console.error("Error occurred:", error);

@@ -1,18 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, Alert,TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { addProduits } from '../endpoint';
 import DateTimePicker from "@react-native-community/datetimepicker";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddPost() {
-    const [articleImage, setArticleImage] = useState(null);
+    // const [articleImage, setArticleImage] = useState(null);
     const [prix, setPrice] = useState('');
     const [nomProduit, setNomProduit] = useState('');
     const [quantité, setQuantite] = useState('');
-    const [dateDePéremption, setDate] = useState(new Date());
-    const [showPicker, setShowPicker] = useState(false);
-    const [categorie, setCategorie] = useState('1');
+    const [dateDePéremption, setDate] = useState(new Date(2024, 0, 1));
+    // const [showPicker, setShowPicker] = useState(false);
+    // const [categorie, setCategorie] = useState('1');
+
+    const addProduct = async () => {
+        const idVendeur = await AsyncStorage.getItem('vendeurId');
+        addProduits({nomProduit:nomProduit, quantité: quantité, dateDePéremption:dateDePéremption, prix: prix, idVendeur:idVendeur})
+    }
 
     const handleNomChange = (text) => {
         setNomProduit(text);
@@ -57,11 +63,11 @@ export default function AddPost() {
             setShowSelectButton(false); // Masquer le bouton après avoir sélectionné une image
         }
     };
-    const handleAdd = async () => {
-        const response = await addProduits({ nomProduit:nomProduit, quantité:nomProduit, dateDePéremption:dateDePéremption, prix:prix, idCategorie:idCategorie  });
-        console.log(response); 
-        navigation.navigate("Menu");
-    };
+    // const handleAdd = async () => {
+    //     const response = await addProduits({ nomProduit:nomProduit, quantité:nomProduit, dateDePéremption:dateDePéremption, prix:prix, idCategorie:idCategorie  });
+    //     console.log(response); 
+    //     navigation.navigate("Menu");
+    // };
 
     return (
         <ImageBackground source={require('../assets/background.png')} style={styles.backgroundImage}>
@@ -87,21 +93,6 @@ export default function AddPost() {
                     onChangeText={handleNomChange}
                     value={nomProduit}
                 />
-                <Text style={styles.textP}> date De Péremption</Text>
-                {showPicker && (
-                    <DateTimePicker
-                        mode='date'
-                        display='spinner'
-                        value={dateDePéremption}
-
-                    />
-                )}
-                <TextInput
-                    style={styles.descriptionInput}
-                    placeholder="sat Aug 21 2024"
-                    onChangeText={handleDateChange}
-                    value={dateDePéremption}
-                />
                 <Text style={styles.text}> Quantite</Text>
                 <TextInput
                     style={styles.descriptionInput}
@@ -116,7 +107,7 @@ export default function AddPost() {
                         onChangeText={handlePriceChange}
                         value={prix}
                     />
-                    <TouchableOpacity onPress={handleAdd} style={styles.validateButton}>
+                    <TouchableOpacity onPress={addProduct} style={styles.validateButton}>
                         <Text style={styles.buttonText}>Validate</Text>
                     </TouchableOpacity>
                 </View>

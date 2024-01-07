@@ -37,10 +37,28 @@ export const getAllProduits = async () => {
     return(response.data);
 }
 
-export const addProduits = async () => {
+export const addProduits = async (data) => {
     return await axios.post(`${url}/produits/add`, data);
 }
 
+// export const addProduct = async () => {
+//     return 
+// }
+
+export const getProduct = async (id) => {
+    return await axios.get(`${url}/produits/getProductStock`, {
+        params: {
+            idProduit: id
+        }
+    })
+}
+
+
+export const getClientCommande = async (id) => {
+    return await axios.get(`${url}/commandes/getCommande`, {
+        params: {idClient: id}
+    })
+}
 // export const getProduct = async () => {
 //   const token = await AsyncStorage.getItem('accessToken');
 //   return await axios.get(`${url}/Product/`, {
