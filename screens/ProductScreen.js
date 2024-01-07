@@ -69,8 +69,6 @@ import { getAllProduits } from '../endpoint';
 
 export default function ProductScreen({ navigation, route }) {
   const [data, setData] = useState([]);
-  
-
     useEffect(() => {
     getAllProduits()
       .then((response) => {
@@ -84,16 +82,16 @@ export default function ProductScreen({ navigation, route }) {
   // dynamique 
 
   
-  
+  console.log(data);
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.card}   >
-        <Image source={item.image} style={styles.cardImage} />
-            <Text style={styles.cardText} onPress={()=> navigation.navigate("view")}>{item.nomProduit} </Text>
+      <View style={styles.card}>
+        <Text style={styles.cardText} onPress={() => navigation.navigate("view")}>{item.nomProduit}</Text>
         <Text style={styles.cardText}>{item.prix}</Text>
       </View>
     );
   };
+  
   
   //static
   // const renderItem = ({ item }) => {
@@ -156,7 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
   },

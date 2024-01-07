@@ -19,6 +19,10 @@ export const register = async (data) => {
   return await axios.post(`${url}/clients/register`, data);
 }
 
+export const addProduitToCommande = async (data) =>{
+    return await axios.post(`${url}/commandes/addToCommande`, data);
+}
+
 // export const currentUser = async () => {
 //   const token = await AsyncStorage.getItem('accessToken');
 //   return await axios.get(`${url}/users/current`, {
@@ -29,7 +33,8 @@ export const register = async (data) => {
 // }
 
 export const getAllProduits = async () => {
-    return await axios.get(`${url}/produits/getAll`,data);
+    const response = await axios.get(`${url}/produits/getAll`); 
+    return(response.data);
 }
 
 export const addProduits = async () => {

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar, StyleSheet, Text, View, Image, ImageBackground,TouchableOpacity } from 'react-native';
+import { addProduitToCommande } from '../endpoint';
+import { TextInput } from 'react-native-paper';
 
 
 
@@ -9,8 +11,13 @@ export default function ViewScreen({ navigation }) {
     description: 'This is a description of the product. Add more details here.',
     price: '15DT', // Replace with your product price
   };
-   const handleAddToCart = () => {
-    console.log('Product added to cart!');
+
+  const [idClient,setClient]=useState('');
+  const [idProduit,setProduit]=useState('');
+  const [quantité,setQuantite]=useState('');
+   const handleAddToCart = async() => {
+    const response = await addProduitToCommande({ idProduit: idProduit, idClient: idClient, quantité: quantité });
+    navigation.navigate("Menu");
   };
 
   
@@ -23,8 +30,14 @@ export default function ViewScreen({ navigation }) {
               <View style={styles.infoContainer}>
                    <Text style={styles.price}>{product.price}</Text>
                    <Text style={styles.description}>{product.description}</Text>
+                   <TextInput
+                      placeholder="Enter Quantity"
+                      value={quantité}
+                      onChangeText={(text) => setQuantite(text)}
+                      style={styles.input}
+                    />
               </View>
-        
+                
               <TouchableOpacity onPress={handleAddToCart} style={styles.addToCartButton}>
                   <Text style={styles.buttonText}>Add to Cart</Text>
               </TouchableOpacity>
